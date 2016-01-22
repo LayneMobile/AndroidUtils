@@ -8,6 +8,6 @@ repositories {
 }
 
 dependencies {
-    compile 'com.laynemobile:androidutils:0.1.1'
+    compile 'com.laynemobile:androidutils:0.1.2'
 }
 ```
