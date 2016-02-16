@@ -29,8 +29,7 @@ android {
 }
 
 dependencies {
-    compile "com.android.support:appcompat-v7:${appAndroidSupportVersion}"
-    compile "com.android.support:design:${appAndroidSupportVersion}"
+    compile project(':androidutils')
 
     // testing
     testCompile "junit:junit:${appJunitVersion}"
