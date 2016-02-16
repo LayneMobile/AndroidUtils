@@ -23,7 +23,7 @@ import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
-import com.laynemobile.android.R;
+import com.laynemobile.android.drawer.R;
 import com.laynemobile.android.util.Util;
 
 public class AndroidDrawer extends FrameLayout {
@@ -54,7 +54,7 @@ public class AndroidDrawer extends FrameLayout {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.NavigationView, defStyleAttr,
                 R.style.Widget_Design_NavigationView);
         Util.setViewBackground(this, a.getDrawable(R.styleable.NavigationView_android_background));
-        if (a.hasValue(android.support.design.R.styleable.NavigationView_elevation)) {
+        if (a.hasValue(R.styleable.NavigationView_elevation)) {
             ViewCompat.setElevation(this, (float) a.getDimensionPixelSize(R.styleable.NavigationView_elevation, 0));
         }
         ViewCompat.setFitsSystemWindows(this,

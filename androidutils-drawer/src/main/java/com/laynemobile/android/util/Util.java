@@ -23,7 +23,7 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 
-import com.laynemobile.android.R;
+import com.laynemobile.android.drawer.R;
 
 public class Util {
     public static int getActionBarSize(Context context) {
