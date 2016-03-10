@@ -22,9 +22,6 @@ android {
 
     defaultConfig {
         minSdkVersion appMinSdkVersion as int
-        targetSdkVersion appTargetSdkVersion as int
-        versionCode VERSION_CODE as int
-        versionName VERSION_NAME
     }
 }
 

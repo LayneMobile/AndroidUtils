@@ -28,8 +28,8 @@ android {
 dependencies {
     // Dependencies
     compile project(':androidutils')
-    compile "com.android.support:appcompat-v7:${appAndroidSupportVersion}"
-    compile "com.android.support:design:${appAndroidSupportVersion}"
+    // Gson
+    compile "com.google.code.gson:gson:${appGsonVersion}"
 
     // testing
     testCompile "junit:junit:${appJunitVersion}"

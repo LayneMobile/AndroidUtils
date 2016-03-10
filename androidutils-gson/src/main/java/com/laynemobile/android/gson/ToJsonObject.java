@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
-include ':androidutils',
-        ':androidutils-drawer',
-        ':androidutils-gson'
+package com.laynemobile.android.gson;
+
+import android.support.annotation.NonNull;
+
+public interface ToJsonObject {
+    @NonNull String toJson();
+}
