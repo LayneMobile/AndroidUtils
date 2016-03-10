@@ -22,7 +22,7 @@ import android.os.Parcelable;
 import com.google.gson.Gson;
 
 public class GsonParcelable extends GsonObject implements Parcelable {
-    public static final Parcelable.Creator<GsonParcelable> CREATOR = new BaseCreator<GsonParcelable>() {
+    public static final Parcelable.Creator<? extends GsonParcelable> CREATOR = new BaseCreator<GsonParcelable>() {
         @Override protected Gson gson() {
             return GsonObject.gson();
         }
