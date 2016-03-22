@@ -9,12 +9,12 @@ repositories {
 
 dependencies {
     // Base Utils
-    compile 'com.laynemobile:androidutils:0.1.5'
+    compile 'com.laynemobile:androidutils:0.1.6'
 
     // Android Drawer Utils
-    compile 'com.laynemobile:androidutils-drawer:0.1.5'
+    compile 'com.laynemobile:androidutils-drawer:0.1.6'
 
     // Android Gson Utils
-    compile 'com.laynemobile:androidutils-gson:0.1.5'
+    compile 'com.laynemobile:androidutils-gson:0.1.6'
 }
 ```
