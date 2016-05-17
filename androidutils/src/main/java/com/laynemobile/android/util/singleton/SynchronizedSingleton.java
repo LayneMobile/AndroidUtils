@@ -18,31 +18,24 @@ package com.laynemobile.android.util.singleton;
 
 import android.support.annotation.NonNull;
 
-public abstract class SynchronizedSingleton<T> extends LazySingleton<T>
-{
+public abstract class SynchronizedSingleton<T> extends LazySingleton<T> {
     private final Object mLock = new Object();
     private T mInstance;
 
     protected SynchronizedSingleton() {}
 
-    public static <T> SynchronizedSingleton<T> create(@NonNull final InstanceCreator<T> instanceCreator)
-    {
-        return new SynchronizedSingleton<T>()
-        {
-            @NonNull @Override protected T newInstance()
-            {
+    public static <T> SynchronizedSingleton<T> create(@NonNull final InstanceCreator<T> instanceCreator) {
+        return new SynchronizedSingleton<T>() {
+            @NonNull @Override protected T newInstance() {
                 return instanceCreator.newInstance();
             }
         };
     }
 
-    @NonNull @Override public final T instance()
-    {
+    @NonNull @Override public final T instance() {
         T instance;
-        synchronized (mLock)
-        {
-            if ((instance = mInstance) == null)
-            {
+        synchronized (mLock) {
+            if ((instance = mInstance) == null) {
                 return mInstance = newInstance();
             }
         }

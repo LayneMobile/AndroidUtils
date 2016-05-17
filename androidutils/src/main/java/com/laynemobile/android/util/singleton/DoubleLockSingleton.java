@@ -18,33 +18,25 @@ package com.laynemobile.android.util.singleton;
 
 import android.support.annotation.NonNull;
 
-public abstract class DoubleLockSingleton<T> extends LazySingleton<T>
-{
+public abstract class DoubleLockSingleton<T> extends LazySingleton<T> {
     private final Object mLock = new Object();
     private volatile T mInstance;
 
     protected DoubleLockSingleton() {}
 
-    public static <T> DoubleLockSingleton<T> create(@NonNull final InstanceCreator<T> instanceCreator)
-    {
-        return new DoubleLockSingleton<T>()
-        {
-            @NonNull @Override protected T newInstance()
-            {
+    public static <T> DoubleLockSingleton<T> create(@NonNull final InstanceCreator<T> instanceCreator) {
+        return new DoubleLockSingleton<T>() {
+            @NonNull @Override protected T newInstance() {
                 return instanceCreator.newInstance();
             }
         };
     }
 
-    @NonNull @Override public final T instance()
-    {
+    @NonNull @Override public final T instance() {
         T instance;
-        if ((instance = mInstance) == null)
-        {
-            synchronized (mLock)
-            {
-                if ((instance = mInstance) == null)
-                {
+        if ((instance = mInstance) == null) {
+            synchronized (mLock) {
+                if ((instance = mInstance) == null) {
                     return mInstance = newInstance();
                 }
             }

@@ -20,32 +20,25 @@ import android.support.annotation.NonNull;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-public abstract class AtomicSingleton<T> extends LazySingleton<T>
-{
+public abstract class AtomicSingleton<T> extends LazySingleton<T> {
     private final AtomicReference<T> mReference;
 
-    protected AtomicSingleton()
-    {
+    protected AtomicSingleton() {
         mReference = new AtomicReference<>(null);
     }
 
-    public static <T> AtomicSingleton<T> create(@NonNull final InstanceCreator<T> instanceCreator)
-    {
-        return new AtomicSingleton<T>()
-        {
-            @NonNull @Override protected T newInstance()
-            {
+    public static <T> AtomicSingleton<T> create(@NonNull final InstanceCreator<T> instanceCreator) {
+        return new AtomicSingleton<T>() {
+            @NonNull @Override protected T newInstance() {
                 return instanceCreator.newInstance();
             }
         };
     }
 
-    @NonNull @Override public final T instance()
-    {
+    @NonNull @Override public final T instance() {
         final T instance;
         final AtomicReference<T> reference = mReference;
-        if ((instance = reference.get()) == null)
-        {
+        if ((instance = reference.get()) == null) {
             reference.compareAndSet(null, newInstance());
             return reference.get();
         }

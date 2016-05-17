@@ -18,7 +18,6 @@ package com.laynemobile.android.util.singleton;
 
 import android.support.annotation.NonNull;
 
-public interface Singleton<T>
-{
+public interface Singleton<T> {
     @NonNull T instance();
 }

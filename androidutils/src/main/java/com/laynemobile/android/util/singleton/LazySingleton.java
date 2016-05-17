@@ -18,12 +18,10 @@ package com.laynemobile.android.util.singleton;
 
 import android.support.annotation.NonNull;
 
-public abstract class LazySingleton<T> implements Singleton<T>
-{
+public abstract class LazySingleton<T> implements Singleton<T> {
     @NonNull protected abstract T newInstance();
 
-    public interface InstanceCreator<T>
-    {
+    public interface InstanceCreator<T> {
         @NonNull T newInstance();
     }
 }
