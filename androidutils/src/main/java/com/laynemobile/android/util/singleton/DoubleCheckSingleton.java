@@ -18,14 +18,14 @@ package com.laynemobile.android.util.singleton;
 
 import android.support.annotation.NonNull;
 
-public abstract class DoubleLockSingleton<T> extends LazySingleton<T> {
+public abstract class DoubleCheckSingleton<T> extends LazySingleton<T> {
     private final Object mLock = new Object();
     private volatile T mInstance;
 
-    protected DoubleLockSingleton() {}
+    protected DoubleCheckSingleton() {}
 
-    public static <T> DoubleLockSingleton<T> create(@NonNull final InstanceCreator<T> instanceCreator) {
-        return new DoubleLockSingleton<T>() {
+    public static <T> DoubleCheckSingleton<T> create(@NonNull final InstanceCreator<T> instanceCreator) {
+        return new DoubleCheckSingleton<T>() {
             @NonNull @Override protected T newInstance() {
                 return instanceCreator.newInstance();
             }
