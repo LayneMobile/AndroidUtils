@@ -19,8 +19,8 @@ package com.laynemobile.android.util.singleton;
 import android.support.annotation.NonNull;
 
 public abstract class DoubleCheckSingleton<T> extends LazySingleton<T> {
-    private final Object mLock = new Object();
-    private volatile T mInstance;
+    private final Object lock = new Object();
+    private volatile T instance;
 
     protected DoubleCheckSingleton() {}
 
@@ -33,14 +33,14 @@ public abstract class DoubleCheckSingleton<T> extends LazySingleton<T> {
     }
 
     @NonNull @Override public final T instance() {
-        T instance;
-        if ((instance = mInstance) == null) {
-            synchronized (mLock) {
-                if ((instance = mInstance) == null) {
-                    return mInstance = newInstance();
+        T i;
+        if ((i = instance) == null) {
+            synchronized (lock) {
+                if ((i = instance) == null) {
+                    return instance = checkNewInstance();
                 }
             }
         }
-        return instance;
+        return i;
     }
 }

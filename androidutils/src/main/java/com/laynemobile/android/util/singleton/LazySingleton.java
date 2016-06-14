@@ -21,6 +21,14 @@ import android.support.annotation.NonNull;
 public abstract class LazySingleton<T> implements Singleton<T> {
     @NonNull protected abstract T newInstance();
 
+    @NonNull protected final T checkNewInstance() {
+        final T instance = newInstance();
+        if (instance == null) {
+            throw new NullPointerException("newInstance() cannot return null");
+        }
+        return instance;
+    }
+
     public interface InstanceCreator<T> {
         @NonNull T newInstance();
     }

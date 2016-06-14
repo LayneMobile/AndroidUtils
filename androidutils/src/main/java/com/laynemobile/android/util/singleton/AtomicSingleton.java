@@ -21,10 +21,10 @@ import android.support.annotation.NonNull;
 import java.util.concurrent.atomic.AtomicReference;
 
 public abstract class AtomicSingleton<T> extends LazySingleton<T> {
-    private final AtomicReference<T> mReference;
+    private final AtomicReference<T> reference;
 
     protected AtomicSingleton() {
-        mReference = new AtomicReference<>(null);
+        this.reference = new AtomicReference<>(null);
     }
 
     public static <T> AtomicSingleton<T> create(@NonNull final InstanceCreator<T> instanceCreator) {
@@ -37,10 +37,10 @@ public abstract class AtomicSingleton<T> extends LazySingleton<T> {
 
     @NonNull @Override public final T instance() {
         final T instance;
-        final AtomicReference<T> reference = mReference;
-        if ((instance = reference.get()) == null) {
-            reference.compareAndSet(null, newInstance());
-            return reference.get();
+        final AtomicReference<T> ref = this.reference;
+        if ((instance = ref.get()) == null) {
+            ref.compareAndSet(null, checkNewInstance());
+            return ref.get();
         }
         return instance;
     }

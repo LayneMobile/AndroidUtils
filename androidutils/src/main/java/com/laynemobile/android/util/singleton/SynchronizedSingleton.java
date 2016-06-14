@@ -19,8 +19,8 @@ package com.laynemobile.android.util.singleton;
 import android.support.annotation.NonNull;
 
 public abstract class SynchronizedSingleton<T> extends LazySingleton<T> {
-    private final Object mLock = new Object();
-    private T mInstance;
+    private final Object lock = new Object();
+    private T instance;
 
     protected SynchronizedSingleton() {}
 
@@ -34,9 +34,9 @@ public abstract class SynchronizedSingleton<T> extends LazySingleton<T> {
 
     @NonNull @Override public final T instance() {
         T instance;
-        synchronized (mLock) {
-            if ((instance = mInstance) == null) {
-                return mInstance = newInstance();
+        synchronized (lock) {
+            if ((instance = this.instance) == null) {
+                return this.instance = checkNewInstance();
             }
         }
         return instance;
