@@ -16,6 +16,15 @@
 
 package com.laynemobile.android.util.singleton;
 
-public interface Singleton<T> {
-    T instance();
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
+public interface LoadingSingleton<T, P> extends Singleton<T> {
+    @NonNull T instance(P p);
+
+    @Nullable @Override T instance();
+
+    interface Loader<T, P> {
+        @NonNull T loadInstance(P p);
+    }
 }

@@ -17,29 +17,34 @@
 package com.laynemobile.android.util.singleton;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-public abstract class AtomicSingleton<T> extends LazySingleton<T> {
+abstract class AtomicLoadingSingleton<T, P> extends AbstractLoadingSingleton<T, P> {
     private final AtomicReference<T> reference;
 
-    protected AtomicSingleton() {
+    private AtomicLoadingSingleton() {
         this.reference = new AtomicReference<>(null);
     }
 
-    public static <T> AtomicSingleton<T> create(@NonNull final InstanceCreator<T> instanceCreator) {
-        return new AtomicSingleton<T>() {
-            @NonNull @Override protected T newInstance() {
-                return instanceCreator.newInstance();
+    static <T, P> AtomicLoadingSingleton<T, P> create(@NonNull final Loader<T, P> loader) {
+        return new AtomicLoadingSingleton<T, P>() {
+            @NonNull @Override protected T loadInstance(P p) {
+                return loader.loadInstance(p);
             }
         };
     }
 
-    @NonNull @Override public final T instance() {
+    @Nullable @Override public final T instance() {
+        return this.reference.get();
+    }
+
+    @NonNull @Override public final T instance(P p) {
         final T instance;
         final AtomicReference<T> ref = this.reference;
         if ((instance = ref.get()) == null) {
-            ref.compareAndSet(null, checkNewInstance());
+            ref.compareAndSet(null, checkLoadInstance(p));
             return ref.get();
         }
         return instance;

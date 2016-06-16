@@ -16,6 +16,16 @@
 
 package com.laynemobile.android.util.singleton;
 
-public interface Singleton<T> {
-    T instance();
+import android.support.annotation.NonNull;
+
+public abstract class AbstractLoadingSingleton<T, P> implements LoadingSingleton<T, P> {
+    @NonNull protected abstract T loadInstance(P p);
+
+    @NonNull protected final T checkLoadInstance(P p) {
+        final T instance = loadInstance(p);
+        if (instance == null) {
+            throw new NullPointerException("loadInstance(" + p + ") cannot return null");
+        }
+        return instance;
+    }
 }

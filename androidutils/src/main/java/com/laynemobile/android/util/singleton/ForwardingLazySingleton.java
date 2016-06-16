@@ -16,6 +16,20 @@
 
 package com.laynemobile.android.util.singleton;
 
-public interface Singleton<T> {
-    T instance();
+import android.support.annotation.NonNull;
+
+class ForwardingLazySingleton<T> extends LazySingleton<T> {
+    private final AbstractLoadingSingleton<T, Params> delegate;
+
+    ForwardingLazySingleton(AbstractLoadingSingleton<T, Params> delegate) {
+        this.delegate = delegate;
+    }
+
+    @NonNull @Override public final T instance() {
+        return delegate.instance(Params.INSTANCE);
+    }
+
+    @NonNull @Override protected final T newInstance() {
+        return delegate.loadInstance(Params.INSTANCE);
+    }
 }

@@ -17,27 +17,32 @@
 package com.laynemobile.android.util.singleton;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
-public abstract class DoubleCheckSingleton<T> extends LazySingleton<T> {
+abstract class DoubleCheckSingleton<T, P> extends AbstractLoadingSingleton<T, P> {
     private final Object lock = new Object();
     private volatile T instance;
 
-    protected DoubleCheckSingleton() {}
+    private DoubleCheckSingleton() {}
 
-    public static <T> DoubleCheckSingleton<T> create(@NonNull final InstanceCreator<T> instanceCreator) {
-        return new DoubleCheckSingleton<T>() {
-            @NonNull @Override protected T newInstance() {
-                return instanceCreator.newInstance();
+    static <T, P> DoubleCheckSingleton<T, P> create(@NonNull final Loader<T, P> loader) {
+        return new DoubleCheckSingleton<T, P>() {
+            @NonNull @Override protected T loadInstance(P p) {
+                return loader.loadInstance(p);
             }
         };
     }
 
-    @NonNull @Override public final T instance() {
+    @Nullable @Override public final T instance() {
+        return instance;
+    }
+
+    @NonNull @Override public final T instance(P p) {
         T i;
         if ((i = instance) == null) {
             synchronized (lock) {
                 if ((i = instance) == null) {
-                    return instance = checkNewInstance();
+                    return instance = checkLoadInstance(p);
                 }
             }
         }

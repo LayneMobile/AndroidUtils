@@ -17,26 +17,33 @@
 package com.laynemobile.android.util.singleton;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
-public abstract class SynchronizedSingleton<T> extends LazySingleton<T> {
+abstract class SynchronizedSingleton<T, P> extends AbstractLoadingSingleton<T, P> {
     private final Object lock = new Object();
     private T instance;
 
-    protected SynchronizedSingleton() {}
+    private SynchronizedSingleton() {}
 
-    public static <T> SynchronizedSingleton<T> create(@NonNull final InstanceCreator<T> instanceCreator) {
-        return new SynchronizedSingleton<T>() {
-            @NonNull @Override protected T newInstance() {
-                return instanceCreator.newInstance();
+    static <T, P> SynchronizedSingleton<T, P> create(@NonNull final Loader<T, P> loader) {
+        return new SynchronizedSingleton<T, P>() {
+            @NonNull @Override protected T loadInstance(P p) {
+                return loader.loadInstance(p);
             }
         };
     }
 
-    @NonNull @Override public final T instance() {
+    @Nullable @Override public final T instance() {
+        synchronized (lock) {
+            return instance;
+        }
+    }
+
+    @NonNull @Override public final T instance(P p) {
         T instance;
         synchronized (lock) {
             if ((instance = this.instance) == null) {
-                return this.instance = checkNewInstance();
+                return this.instance = checkLoadInstance(p);
             }
         }
         return instance;

@@ -19,7 +19,14 @@ package com.laynemobile.android.util;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
+import com.laynemobile.android.util.singleton.LazySingleton.InstanceCreator;
+import com.laynemobile.android.util.singleton.Singleton;
+import com.laynemobile.android.util.singleton.Singletons;
+
+import static com.laynemobile.android.util.singleton.Singletons.Style.DoubleCheck;
 
 public final class Handlers {
     private static final Handler MAIN_HANDLER = new Handler(Looper.getMainLooper());
@@ -65,6 +72,29 @@ public final class Handlers {
             thread.start();
             LOOPER = thread.getLooper();
             HANDLER = new Handler(LOOPER);
+        }
+    }
+
+    private static final class Background2 {
+        private static final Singleton<Background2> singleton = Singletons.singleton(DoubleCheck,
+                new InstanceCreator<Background2>() {
+                    @NonNull @Override public Background2 newInstance() {
+                        final HandlerThread thread = new HandlerThread("BackgroundHandler");
+                        thread.start();
+                        return new Background2(thread.getLooper());
+                    }
+                });
+
+        private final Looper looper;
+        private final Handler handler;
+
+        private Background2(Looper looper) {
+            this.looper = looper;
+            this.handler = new Handler(looper);
+        }
+
+        private static Background2 instance() {
+            return singleton.instance();
         }
     }
 }
