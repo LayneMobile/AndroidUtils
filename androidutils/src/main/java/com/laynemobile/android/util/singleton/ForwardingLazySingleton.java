@@ -18,7 +18,9 @@ package com.laynemobile.android.util.singleton;
 
 import android.support.annotation.NonNull;
 
-class ForwardingLazySingleton<T> extends LazySingleton<T> {
+import com.laynemobile.android.util.singleton.LazySingleton.Params;
+
+class ForwardingLazySingleton<T> implements Singleton<T> {
     private final AbstractLoadingSingleton<T, Params> delegate;
 
     ForwardingLazySingleton(AbstractLoadingSingleton<T, Params> delegate) {
@@ -27,9 +29,5 @@ class ForwardingLazySingleton<T> extends LazySingleton<T> {
 
     @NonNull @Override public final T instance() {
         return delegate.instance(Params.INSTANCE);
-    }
-
-    @NonNull @Override protected final T newInstance() {
-        return delegate.loadInstance(Params.INSTANCE);
     }
 }

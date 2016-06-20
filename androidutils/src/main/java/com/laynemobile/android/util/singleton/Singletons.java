@@ -18,25 +18,39 @@ package com.laynemobile.android.util.singleton;
 
 import android.support.annotation.NonNull;
 
-public final class Singletons {
-    private Singletons() { throw new AssertionError("no instances"); }
-
-    public static <T, P> AbstractLoadingSingleton<T, P> loadingSingleton(Style style,
-            LoadingSingleton.Loader<T, P> loader) {
-        switch (style) {
-            case Atomic:
-                return AtomicLoadingSingleton.create(loader);
-            case DoubleCheck:
-                return DoubleCheckSingleton.create(loader);
-            case Synchronized:
-                return SynchronizedSingleton.create(loader);
-            default:
-                throw new IllegalArgumentException("unknown singleton style -> " + style);
+public enum Singletons {
+    Atomic(new Delegate() {
+        @Override public <T, P> LoadingSingleton<T, P> loading(LoadingSingleton.Loader<T, P> loader) {
+            return AtomicLoadingSingleton.create(loader);
         }
+    }),
+    DoubleCheck(new Delegate() {
+        @Override public <T, P> LoadingSingleton<T, P> loading(LoadingSingleton.Loader<T, P> loader) {
+            return DoubleCheckSingleton.create(loader);
+        }
+    }),
+    Synchronized(new Delegate() {
+        @Override public <T, P> LoadingSingleton<T, P> loading(LoadingSingleton.Loader<T, P> loader) {
+            return SynchronizedSingleton.create(loader);
+        }
+    });
+
+    private final Delegate delegate;
+
+    Singletons(Delegate delegate) {
+        this.delegate = delegate;
     }
 
-    public static <T> Singleton<T> singleton(Style style, LazySingleton.InstanceCreator<T> instanceCreator) {
-        return forwarding(loadingSingleton(style, loader(instanceCreator)));
+    public <T, P> LoadingSingleton<T, P> createLoading(LoadingSingleton.Loader<T, P> loader) {
+        return delegate.loading(loader);
+    }
+
+    public <T> Singleton<T> create(LazySingleton.InstanceCreator<T> instanceCreator) {
+        return forwarding(createLoading(loader(instanceCreator)));
+    }
+
+    private interface Delegate {
+        <T, P> LoadingSingleton<T, P> loading(LoadingSingleton.Loader<T, P> loader);
     }
 
     private static <T> Singleton<T> forwarding(LoadingSingleton<T, LazySingleton.Params> loadingSingleton) {
@@ -57,11 +71,5 @@ public final class Singletons {
         @NonNull @Override public T loadInstance(LazySingleton.Params params) {
             return instanceCreator.newInstance();
         }
-    }
-
-    public enum Style {
-        Atomic,
-        DoubleCheck,
-        Synchronized
     }
 }

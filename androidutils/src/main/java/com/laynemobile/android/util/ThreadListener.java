@@ -29,7 +29,7 @@ public interface ThreadListener {
             THREAD_IMMEDIATE
     })
     @Retention(RetentionPolicy.SOURCE)
-    @interface Thread {}
+    @interface Thread { }
 
     int THREAD_MAIN = 0;
     int THREAD_BACKGROUND = 1;

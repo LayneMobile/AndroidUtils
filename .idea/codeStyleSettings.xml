@@ -79,11 +79,11 @@
           <option name="XML_LEGACY_SETTINGS_IMPORTED" value="true" />
         </XML>
         <codeStyleSettings language="JAVA">
-          <option name="KEEP_LINE_BREAKS" value="false" />
           <option name="KEEP_BLANK_LINES_IN_DECLARATIONS" value="1" />
           <option name="KEEP_BLANK_LINES_IN_CODE" value="1" />
           <option name="KEEP_BLANK_LINES_BEFORE_RBRACE" value="0" />
           <option name="ALIGN_MULTILINE_PARAMETERS" value="false" />
+          <option name="SPACE_WITHIN_BRACES" value="true" />
           <option name="CALL_PARAMETERS_WRAP" value="1" />
           <option name="METHOD_PARAMETERS_WRAP" value="1" />
           <option name="METHOD_CALL_CHAIN_WRAP" value="5" />
@@ -93,7 +93,6 @@
           <option name="ARRAY_INITIALIZER_WRAP" value="5" />
           <option name="ARRAY_INITIALIZER_LBRACE_ON_NEXT_LINE" value="true" />
           <option name="ARRAY_INITIALIZER_RBRACE_ON_NEXT_LINE" value="true" />
-          <option name="WRAP_LONG_LINES" value="true" />
           <option name="METHOD_ANNOTATION_WRAP" value="1" />
           <option name="FIELD_ANNOTATION_WRAP" value="1" />
           <option name="ENUM_CONSTANTS_WRAP" value="2" />

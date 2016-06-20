@@ -18,7 +18,7 @@ package com.laynemobile.android.util.singleton;
 
 import android.support.annotation.NonNull;
 
-public abstract class LazySingleton<T> extends AbstractLoadingSingleton<T, LazySingleton.Params> {
+public abstract class LazySingleton<T> implements Singleton<T> {
     @NonNull protected abstract T newInstance();
 
     @NonNull @Override public abstract T instance();
@@ -29,14 +29,6 @@ public abstract class LazySingleton<T> extends AbstractLoadingSingleton<T, LazyS
             throw new NullPointerException("newInstance() cannot return null");
         }
         return instance;
-    }
-
-    @NonNull @Override protected final T loadInstance(Params params) {
-        throw new UnsupportedOperationException("unsupported, use no argument loadInstance() method");
-    }
-
-    @NonNull @Override public final T instance(Params params) {
-        throw new UnsupportedOperationException("unsupported, use no argument instance() method");
     }
 
     public interface InstanceCreator<T> {
