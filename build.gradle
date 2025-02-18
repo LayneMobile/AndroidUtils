@@ -16,11 +16,14 @@
 
 buildscript {
     repositories {
+        maven { url "https://maven.google.com" }
         jcenter()
+        mavenCentral()
+        mavenLocal()
     }
     dependencies {
         classpath "com.android.tools.build:gradle:${appAndroidGradleVersion}"
-        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:${appBintrayGradlePlugin}"
+//        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:${appBintrayGradlePlugin}"
         classpath "com.github.dcendents:android-maven-gradle-plugin:${appAndroidMavenGradleVersion}"
     }
 }
@@ -31,6 +34,9 @@ ext {
 
 subprojects {
     repositories {
+        maven { url "https://maven.google.com" }
         jcenter()
+        mavenCentral()
+        mavenLocal()
     }
 }
